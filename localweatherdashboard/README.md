@@ -1,75 +1,63 @@
-# React + TypeScript + Vite
+# Local Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Take-home assessment for Better Developers: a dashboard showing current weather and a 7-day
+forecast for Aarhus, Denmark, built with Vite + React and styled with Shadcn/Tailwind. Weather
+data comes from the [Open-Meteo](https://open-meteo.com/) API (no API key required).
 
-Currently, two official plugins are available:
+## Running locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open the printed local URL (typically `http://localhost:5173`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Other scripts:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # type-check and produce a production build
+npm run preview  # preview the production build locally
+npm run lint      # run ESLint
+npm test         # run the unit test suite (Vitest)
+```
+
+No environment variables or API keys are required — Open-Meteo's forecast endpoint is public.
+
+## Testing
+
+Unit tests use [Vitest](https://vitest.dev/). The current suite covers the pure mapping logic
+in `src/api/weatherMapper.ts` (WMO weather-code → app-level condition, and the Open-Meteo
+response → `WeatherData` shape), since that's where a silent bug would show the wrong weather
+to a user without any type error to catch it.
+
+```bash
+npm test
+```
+
+## File structure
 
 ```
+src/
+  api/
+    openMeteo.ts           # Fetches raw forecast data from the Open-Meteo API for Aarhus
+    weatherMapper.ts        # Maps the raw Open-Meteo response into app-level WeatherData/WeatherCondition types
+    weatherMapper.test.ts   # Unit tests for the mapping logic above
+  components/
+    ui/
+      button.tsx            # Shadcn-generated UI primitive
+  lib/
+    utils.ts                # Shared helpers (e.g. Shadcn's `cn` class-name merge utility)
+  App.tsx                  # Root application component
+  App.css
+  main.tsx                 # React entry point
+  index.css                # Global styles / Tailwind entry
+```
+
+This structure will grow as the dashboard UI, loading/error states, and any stretch features
+(dark/light toggle, LLM weather commentary, offline mock fallback) are added.
+
+## Scope notes
+
+See `NOTES.md` (once present) for anything intentionally skipped or deferred given the take-home
+timebox, and why.

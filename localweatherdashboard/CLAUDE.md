@@ -15,7 +15,7 @@
         - Offline mock data fallback.
 
 - **Timebox:** Take home with **logged** hours, no hard limit, but time is actually looked at.
-- **Stack:** Vite React App using Open Meteo for weather fetching. Shadcn for styling.
+- **Stack:** Vite React App using Open Meteo for weather fetching. Shadcn for styling. The shadcn preset https://shadcnpreset.com/pdp/b6F9PRDpZ will be used for this project.
 
 ## How I work with Claude here
 
