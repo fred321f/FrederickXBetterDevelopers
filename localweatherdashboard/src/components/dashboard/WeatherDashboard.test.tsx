@@ -15,6 +15,7 @@ const mockUseWeather = vi.mocked(useWeather)
 const sampleData: WeatherData = {
   current: { temperatureC: 20, humidityPercent: 60, windSpeedKph: 10, condition: "clear" },
   forecast: [],
+  insight: null,
 }
 
 function mockResult(overrides: Partial<ReturnType<typeof useWeather>>) {

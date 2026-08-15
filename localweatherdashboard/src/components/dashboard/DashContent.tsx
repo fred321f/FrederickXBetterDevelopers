@@ -6,5 +6,11 @@ interface DashContentProps {
 
 /** Placeholder — real dashboard UI is a separate follow-up task. */
 export default function DashContent({ data }: DashContentProps) {
-  return <pre>{JSON.stringify(data, null, 2)}</pre>
+  return (
+    <>
+      {/* Reserved slot for a future LLM-generated weather insight — insight is always null today */}
+      {data.insight && <p>{data.insight}</p>}
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </>
+  )
 }
