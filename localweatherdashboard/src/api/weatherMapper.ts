@@ -21,6 +21,8 @@ export interface ForecastDay {
 export interface WeatherData {
   current: CurrentWeather
   forecast: ForecastDay[]
+  /** Reserved for a future LLM-generated weather summary. Always `null` today. */
+  insight: string | null
 }
 
 /**
@@ -52,5 +54,6 @@ export function mapOpenMeteoResponse(raw: OpenMeteoResponse): WeatherData {
       highC: raw.daily.temperature_2m_max[i],
       lowC: raw.daily.temperature_2m_min[i],
     })),
+    insight: null,
   }
 }

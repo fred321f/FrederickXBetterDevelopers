@@ -85,6 +85,11 @@ describe('mapOpenMeteoResponse', () => {
     ])
   })
 
+  it('leaves insight null (reserved for future LLM integration)', () => {
+    const raw = buildRaw()
+    expect(mapOpenMeteoResponse(raw).insight).toBeNull()
+  })
+
   it('returns an empty forecast array when daily.time is empty', () => {
     const raw = buildRaw({
       daily: { time: [], weather_code: [], temperature_2m_max: [], temperature_2m_min: [] },
