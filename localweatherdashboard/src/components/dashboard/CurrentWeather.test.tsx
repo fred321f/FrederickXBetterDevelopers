@@ -9,6 +9,9 @@ const data: CurrentWeatherData = {
   humidityPercent: 72,
   windSpeedKph: 12.3,
   condition: "rain",
+  feelsLikeC: 17.2,
+  chanceOfRainPercent: 60,
+  uvIndex: 3,
 }
 
 describe("CurrentWeather", () => {

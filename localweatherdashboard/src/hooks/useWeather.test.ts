@@ -12,12 +12,26 @@ function buildFetchResponse(body: unknown, ok = true, status = 200) {
 }
 
 const rawBody = {
-  current: { temperature_2m: 18.4, relative_humidity_2m: 72, wind_speed_10m: 12.3, weather_code: 0 },
+  current: {
+    time: "2026-08-14T12:00",
+    temperature_2m: 18.4,
+    relative_humidity_2m: 72,
+    wind_speed_10m: 12.3,
+    weather_code: 0,
+    apparent_temperature: 17.1,
+  },
   daily: {
     time: ["2026-08-14"],
     weather_code: [0],
     temperature_2m_max: [22],
     temperature_2m_min: [14],
+    uv_index_max: [5],
+    precipitation_probability_max: [40],
+  },
+  hourly: {
+    time: ["2026-08-14T12:00"],
+    temperature_2m: [18.4],
+    weather_code: [0],
   },
 }
 
@@ -40,7 +54,7 @@ describe("useWeather", () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false))
 
     expect(result.current.error).toBeNull()
-    expect(result.current.data?.current).toEqual({
+    expect(result.current.data?.current).toMatchObject({
       temperatureC: 18.4,
       humidityPercent: 72,
       windSpeedKph: 12.3,

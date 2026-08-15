@@ -13,8 +13,17 @@ vi.mock("@/hooks/useWeather", () => ({
 const mockUseWeather = vi.mocked(useWeather)
 
 const sampleData: WeatherData = {
-  current: { temperatureC: 20, humidityPercent: 60, windSpeedKph: 10, condition: "clear" },
+  current: {
+    temperatureC: 20,
+    humidityPercent: 60,
+    windSpeedKph: 10,
+    condition: "clear",
+    feelsLikeC: 19,
+    chanceOfRainPercent: 10,
+    uvIndex: 4,
+  },
   forecast: [],
+  hourly: [],
   insight: null,
 }
 
