@@ -39,5 +39,5 @@ A pre-submission gate for take-home assessments, and a periodic pass on real pro
 
 ## Related
 
-- [Code Smells Under Pressure](./code-smells-under-pressure.md)
+- [Code Smells Under Pressure](./Code%20Smells%20Under%20Pressure.md)
 - [Project AI coding context](../../CLAUDE.md)
