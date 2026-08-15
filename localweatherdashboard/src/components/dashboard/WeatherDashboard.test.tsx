@@ -21,8 +21,7 @@ const sampleData: WeatherData = {
 function mockResult(overrides: Partial<ReturnType<typeof useWeather>>) {
   mockUseWeather.mockReturnValue({
     data: undefined,
-    isPending: false,
-    isError: false,
+    isLoading: false,
     error: null,
     refetch: vi.fn(),
     ...overrides,
@@ -34,8 +33,8 @@ describe("WeatherDashboard", () => {
     mockUseWeather.mockReset()
   })
 
-  it("renders LoadingState while pending", () => {
-    mockResult({ isPending: true })
+  it("renders LoadingState while loading", () => {
+    mockResult({ isLoading: true })
 
     render(<WeatherDashboard />)
 
@@ -44,7 +43,7 @@ describe("WeatherDashboard", () => {
 
   it("renders ErrorState when the query errors, and retry calls refetch", async () => {
     const refetch = vi.fn()
-    mockResult({ isError: true, error: new Error("boom"), refetch })
+    mockResult({ error: new Error("boom"), refetch })
     const user = userEvent.setup()
 
     render(<WeatherDashboard />)
