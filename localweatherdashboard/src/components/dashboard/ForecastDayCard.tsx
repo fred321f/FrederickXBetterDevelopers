@@ -12,7 +12,7 @@ interface ForecastDayCardProps {
 
 /** A single day's forecast: weekday, icon, and high/low temperatures. */
 export default function ForecastDayCard({ day, isToday }: ForecastDayCardProps) {
-  const { icon: Icon, label, colorVar } = conditionMeta(day.condition)
+  const { icon, label, colorVar } = conditionMeta(day.condition)
 
   return (
     <Card
@@ -25,7 +25,8 @@ export default function ForecastDayCard({ day, isToday }: ForecastDayCardProps) 
         <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
           {isToday ? "Today" : formatWeekday(day.date)}
         </span>
-        <Icon className={colorVar} size={28} aria-hidden="true" />
+        <img src={icon} alt="" aria-hidden="true" className="size-7" />
+        <span className={cn("size-1.5 rounded-full bg-current", colorVar)} aria-hidden="true" />
         <span className="sr-only">{label}</span>
         <div className="flex gap-2 text-sm">
           <span className="font-medium">{Math.round(day.highC)}°</span>

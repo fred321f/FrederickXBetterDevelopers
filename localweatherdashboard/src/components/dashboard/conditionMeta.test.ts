@@ -20,6 +20,14 @@ describe("conditionMeta", () => {
     const meta = conditionMeta(condition)
     expect(meta.label).toBe(label)
     expect(meta.colorVar).toBe(colorVar)
-    expect(meta.icon).toBeDefined()
+    // Meteocons icons are imported SVG sources (URLs/data-URIs), not components — a non-empty
+    // string is the contract now, not a Lucide component reference.
+    expect(typeof meta.icon).toBe("string")
+    expect(meta.icon.length).toBeGreaterThan(0)
+  })
+
+  it("gives every condition a distinct icon", () => {
+    const icons = cases.map(([condition]) => conditionMeta(condition).icon)
+    expect(new Set(icons).size).toBe(icons.length)
   })
 })
