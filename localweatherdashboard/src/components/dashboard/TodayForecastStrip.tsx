@@ -23,18 +23,18 @@ export default function TodayForecastStrip({ hours, className }: TodayForecastSt
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="flex flex-col flex-1 justify-center pt-2 md:pt-4">
+      <CardContent className="flex flex-col flex-1 justify-center pt-2 md:pt-4 min-w-0">
         {/* Removed gap, relying on flex-1 on the children to distribute space evenly */}
-        <div className="flex pb-4 w-full overflow-x-auto snap-mandatory snap-x scrollbar-thin">
+        <div className="flex pb-4 w-full max-w-full min-w-0 overflow-x-auto snap-mandatory snap-x scrollbar-thin">
           {hours.map((hour) => {
             const { icon, label } = conditionMeta(hour.condition)
             return (
               <div 
                 key={hour.time} 
                 // flex-1 forces them to stretch. min-w ensures they scroll if there are too many. border-r adds the dividers.
-                className="flex flex-col flex-1 items-center px-2 border-border/50 border-r last:border-r-0 min-w-[5rem] md:min-w-[6rem] snap-start shrink-0"
+                className="flex flex-col flex-1 items-center px-2 border-border/50 border-r last:border-r-0 min-w-[5.5rem] md:min-w-[6.5rem] snap-start shrink-0"
               >
-                <span className="mb-2 font-semibold text-muted-foreground text-sm">
+                <span className="mb-2 font-semibold text-muted-foreground text-xs md:text-sm">
                   {formatHour(hour.time)}
                 </span>
                 
