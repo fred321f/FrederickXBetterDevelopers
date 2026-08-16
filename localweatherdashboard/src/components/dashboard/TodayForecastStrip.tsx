@@ -25,7 +25,7 @@ export default function TodayForecastStrip({ hours, className }: TodayForecastSt
       
       <CardContent className="flex flex-col flex-1 justify-center pt-2 md:pt-4 min-w-0">
         {/* Removed gap, relying on flex-1 on the children to distribute space evenly */}
-        <div className="flex pb-4 w-full max-w-full min-w-0 overflow-x-auto snap-mandatory snap-x scrollbar-thin">
+        <div className="flex pb-4 w-full min-w-0 max-w-full overflow-x-auto snap-mandatory snap-x scrollbar-thin">
           {hours.map((hour) => {
             const { icon, label } = conditionMeta(hour.condition)
             return (
