@@ -5,12 +5,10 @@ import LoadingState from "@/components/state/LoadingState"
 import DashContent from "@/components/dashboard/DashContent"
 
 export default function WeatherDashboard() {
-  const { data, isLoading, refetch } = useWeather()
+  const { data, isLoading, isFallback, refetch } = useWeather()
 
   if (isLoading) return <LoadingState />
   if (!data) return <EmptyState onRefresh={() => refetch()} /> // edge case: query succeeded with no usable data
-
-  const { isFallback } = { isFallback: true }
 
   return (
     <div className="flex flex-col h-full min-h-0">
