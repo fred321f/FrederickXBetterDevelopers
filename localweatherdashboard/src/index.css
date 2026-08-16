@@ -4,7 +4,7 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/noto-serif";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (@media (prefers-color-scheme: dark));
 
 @theme inline {
     --font-heading: var(--font-serif);
@@ -48,6 +48,10 @@
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
     --font-serif: 'Noto Serif Variable', serif;
+    --color-condition-clear: var(--condition-clear);
+    --color-condition-rain: var(--condition-rain);
+    --color-condition-storm: var(--condition-storm);
+    --color-condition-snow: var(--condition-snow);
 }
 
 :root {
@@ -83,9 +87,22 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+
+    /* Per-condition icon/accent colors — never used as a full background fill.
+       Verified >= 3:1 (WCAG 1.4.11 non-text contrast) against --card. */
+    --condition-clear: oklch(0.60 0.15 75);
+    --condition-rain: oklch(0.55 0.12 240);
+    --condition-storm: oklch(0.38 0.15 240);
+    --condition-snow: oklch(0.65 0.045 230);
 }
 
-.dark {
+/* Dark mode is OS-preference-only (@custom-variant dark above) — no toggle,
+   class, or persisted preference for now. A manual toggle is one of the
+   assignment's stretch ideas, not a requirement; if added later it would
+   need `.dark`/`.light` class selectors reinstated alongside this media
+   query (class wins when present, media query is the fallback). */
+@media (prefers-color-scheme: dark) {
+  :root {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
     --card: oklch(0.205 0 0);
@@ -117,6 +134,13 @@
     --sidebar-accent-foreground: oklch(0.985 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.556 0 0);
+
+    /* Verified >= 3:1 (WCAG 1.4.11) against dark --card oklch(0.205 0 0). */
+    --condition-clear: oklch(0.78 0.11 78);
+    --condition-rain: oklch(0.68 0.11 240);
+    --condition-storm: oklch(0.55 0.16 240);
+    --condition-snow: oklch(0.78 0.03 230);
+  }
 }
 
 @layer base {
@@ -127,6 +151,6 @@
     @apply bg-background text-foreground;
     }
   html {
-    @apply font-serif;
+    @apply font-sans;
     }
 }

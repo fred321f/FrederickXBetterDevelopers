@@ -19,7 +19,7 @@
 
 ## How I work with Claude here
 
-- Proceed autonomously on implementation details, naming, file structure, and routine CRUD/UI work. **Stop and ask before**: introducing a new dependency, changing the data model/schema, picking a state-management or architectural pattern, or anything else that's expensive to reverse later. Always shpw diff after succesful implementation.
+- Proceed autonomously on implementation details, naming, file structure, and routine CRUD/UI work. **Stop and ask before**: introducing a new dependency, changing the data model/schema, picking a state-management or architectural pattern, or anything else that's expensive to reverse later. Always show diff after succesful implementation.
 - I need to be able to explain everything that ships here — in a code review, in an interview, anywhere. Don't just write correct code silently:
   - After any non-trivial feature, or whenever you make a non-obvious choice (a library, a pattern, a tradeoff), give me a short plain-English summary of **what you did and why** — not just a diff.
   - If you reach for something I might not know well, say so in one sentence so I know to go learn it, not just accept it.
@@ -45,26 +45,25 @@ If this project is a timed assessment:
 - Auth middleware must be wired to every route that needs it — not just written. No falling back to a client-supplied header for identity.
 - No hardcoded secrets, no `process.env.X || 'fallback'` for anything security-relevant.
 - No real data (DB dumps, seed files with PII) ever committed. `.env*` gitignored before the first commit.
-- Full checklist: [[Security Checklist]]
+- Full checklist: [Security Checklist](./docs/second-brain/Security%20Checklist.md)
 
 ### Code quality
 - No spammy block/banner comments (`// ----------`). Document functions with `@param`/`@return` where the signature isn't self-explanatory, not with decorative dividers.
 - Don't copy-paste a helper into multiple files — extract and import it. If you're about to retype logic already written elsewhere in this session, stop and reuse it instead.
 - Any multi-statement DB transaction uses one bound connection for the whole sequence, never separate pool calls.
-- Full list of pressure-tested anti-patterns: [[Code Smells Under Pressure]]
+- Full list of pressure-tested anti-patterns: [Code Smells Under Pressure](./docs/second-brain/Code%20Smells%20Under%20Pressure.md)
 
 ### Testing
 - Business logic, calculations, and validation rules get unit tests — test-first where practical, since it forces a cleaner function signature before it's locked in.
 - UI layout/styling can be tested after, or explicitly logged as skipped under Take-home mode above.
-- Stack-specific testability rules: [[Angular - Testable Architecture]] or [[React - State Management Architecture]] (whichever fits this project's stack)
+- Stack-specific testability rules: Angular - Testable Architecture or [React - State Management Architecture](./docs/second-brain/React%20-%20State%20Management%20Architecture.md) (whichever fits this project's stack)
 
 ## Architecture for this project
 
-SPA with third party API OpenMeteo, using an LLM for short 
+SPA with third party API OpenMeteo, using an LLM for short briefs of weather if time allows implementing this.
 
 ## Reference
 
 - [Security Checklist](./docs/second-brain/Security%20Checklist.md)
 - [Code Smells Under Pressure](./docs/second-brain/Code%20Smells%20Under%20Pressure.md)
-- [Patterns Worth Keeping](./docs/second-brain/Patterns%20Worth%20Keeping.md)
 - [React - State Management Architecture](./docs/second-brain/React%20-%20State%20Management%20Architecture.md)

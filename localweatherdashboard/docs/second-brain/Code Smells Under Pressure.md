@@ -54,5 +54,5 @@ Patterns worth recognizing the moment they happen, not hypothetical best practic
 
 ## Related
 
-- [Security Checklist](./security-checklist.md)
+- [Security Checklist](./Security%20Checklist.md)
 - [Project AI coding context](../../CLAUDE.md)

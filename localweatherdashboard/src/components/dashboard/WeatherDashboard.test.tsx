@@ -13,16 +13,24 @@ vi.mock("@/hooks/useWeather", () => ({
 const mockUseWeather = vi.mocked(useWeather)
 
 const sampleData: WeatherData = {
-  current: { temperatureC: 20, humidityPercent: 60, windSpeedKph: 10, condition: "clear" },
+  current: {
+    temperatureC: 20,
+    humidityPercent: 60,
+    windSpeedKph: 10,
+    condition: "clear",
+    feelsLikeC: 19,
+    chanceOfRainPercent: 10,
+    uvIndex: 4,
+  },
   forecast: [],
+  hourly: [],
   insight: null,
 }
 
 function mockResult(overrides: Partial<ReturnType<typeof useWeather>>) {
   mockUseWeather.mockReturnValue({
     data: undefined,
-    isPending: false,
-    isError: false,
+    isLoading: false,
     error: null,
     refetch: vi.fn(),
     ...overrides,
@@ -34,8 +42,8 @@ describe("WeatherDashboard", () => {
     mockUseWeather.mockReset()
   })
 
-  it("renders LoadingState while pending", () => {
-    mockResult({ isPending: true })
+  it("renders LoadingState while loading", () => {
+    mockResult({ isLoading: true })
 
     render(<WeatherDashboard />)
 
@@ -44,7 +52,7 @@ describe("WeatherDashboard", () => {
 
   it("renders ErrorState when the query errors, and retry calls refetch", async () => {
     const refetch = vi.fn()
-    mockResult({ isError: true, error: new Error("boom"), refetch })
+    mockResult({ error: new Error("boom"), refetch })
     const user = userEvent.setup()
 
     render(<WeatherDashboard />)
@@ -67,6 +75,6 @@ describe("WeatherDashboard", () => {
 
     render(<WeatherDashboard />)
 
-    expect(screen.getByText(/"temperatureC": 20/)).toBeInTheDocument()
+    expect(screen.getByText("20°")).toBeInTheDocument()
   })
 })

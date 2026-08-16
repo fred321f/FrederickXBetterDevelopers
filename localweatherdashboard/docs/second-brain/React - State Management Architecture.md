@@ -20,7 +20,7 @@ A codebase that manually copies fetched data into Redux and manages its own load
 | Re-render control | Selector-based, fine-grained by default | Selector-based via `useSelector`, fine-grained with care | Automatic fine-grained via observables | Coarse — any context value change re-renders all consumers unless split carefully |
 | Best fit | Small-to-mid apps, take-homes, teams that want low ceremony | Larger teams, complex state graphs, need for strict structure/devtools/time-travel debugging | Teams comfortable with OOP/reactive patterns, class-based domain models | Rarely-changing, narrowly-scoped global values (theme, auth session) |
 
-**Default recommendation for a take-home assessment**, absent other constraints: TanStack Query for server state, Zustand for any genuinely global client state, plain `useState` for everything local. It's fast to set up, easy to justify in a README, and every piece of it is independently testable without a provider tree.
+**Default recommendation for a take-home assessment**, absent other constraints: TanStack Query for server state, Zustand for any genuinely global client state, plain `useState` for everything local. It's fast to set up, easy to justify in a README, and every piece of it is independently testable without a provider tree. In this case, after closely evaluating, it was removed for this scope, but would reintroduce if the app grew multiple queries or needed background refetch.
 
 **Reach for Redux Toolkit instead when:** the assessment explicitly signals team-scale concerns (many contributors, need for predictable state shape, devtools/time-travel debugging as a stated requirement) — it's a reasonable, defensible choice to name even if you don't have time to fully wire it up.
 

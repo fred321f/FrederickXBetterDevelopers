@@ -2,9 +2,10 @@
 
 Take-home assessment for Better Developers: a dashboard showing current weather and a 7-day
 forecast for Aarhus, Denmark, built with Vite + React and styled with Shadcn/Tailwind. Weather
-data comes from the [Open-Meteo](https://open-meteo.com/) API (no API key required), fetched and
-cached via [TanStack Query](https://tanstack.com/query) — chosen so loading/error/caching state
-comes from a well-tested library instead of being hand-rolled per component.
+data comes from the [Open-Meteo](https://open-meteo.com/) API (no API key required), fetched via
+a small `useState`/`useEffect` hook — a single non-paginated request for one fixed location
+doesn't need a caching/dedup library, so loading/error state is handled directly rather than
+pulled in from one.
 
 **Hours spent:** 2.5
 
@@ -41,9 +42,9 @@ Unit tests use [Vitest](https://vitest.dev/). The current suite covers:
 - **`src/api/openMeteo.ts`** — the fetch layer's error handling, via a mocked `fetch`: the
   non-`ok` response path, malformed/non-JSON response bodies, and the request timeout.
 
-`src/hooks/useWeather.ts` itself is **not** directly tested — it's a thin composition of
-`fetchOpenMeteo` + `mapOpenMeteoResponse` via TanStack Query's `useQuery`, both of which are
-already covered above. See `NOTES.md` for what a direct hook-level test would add.
+- **`src/hooks/useWeather.ts`** — the hook itself, via `renderHook` and a mocked `fetch`: the
+  loading → success transition, the loading → error transition, and that `refetch()` re-runs
+  the fetch.
 
 ```bash
 npm test
@@ -62,14 +63,13 @@ src/
     ui/
       button.tsx            # Shadcn-generated UI primitive
   hooks/
-    useWeather.ts           # TanStack Query hook composing openMeteo + weatherMapper for components to consume
+    useWeather.ts           # Plain useState/useEffect hook composing openMeteo + weatherMapper for components to consume
+    useWeather.test.ts       # Unit tests for the hook's loading/error/refetch behavior
   lib/
     constants.ts            # Shared constants (e.g. fetch timeout)
-    queryClient.ts           # Single shared TanStack Query QueryClient instance
     utils.ts                # Shared helpers (e.g. Shadcn's `cn` class-name merge utility)
   App.tsx                  # Root application component
-  App.css
-  main.tsx                 # React entry point, wraps App in QueryClientProvider
+  main.tsx                 # React entry point
   index.css                # Global styles / Tailwind entry
 ```
 
