@@ -5,7 +5,7 @@ import LoadingState from "@/components/state/LoadingState"
 import DashContent from "@/components/dashboard/DashContent"
 
 export default function WeatherDashboard() {
-  const { data, isLoading, error, refetch } = useWeather()
+  const { data, error, isLoading, refetch } = useWeather()
 
   if (isLoading) return <LoadingState />
   if (error) return <ErrorState error={error} onRetry={() => refetch()} />

@@ -12,41 +12,41 @@ export default function WeatherHero({ data, className }: WeatherHeroProps) {
 
   return (
     <Card className={`${className} border-none`}>
-      <CardContent className="flex flex-row justify-between items-center p-8 h-full font-sans">
-        
+      <CardContent className="flex flex-row justify-between items-center gap-4 p-4 md:p-8 h-full font-sans">
+
         {/* Left Column: Text Data */}
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col justify-between h-full min-w-0">
           <div className="flex flex-col gap-1">
-            <h1 className="font-semibold text-4xl">Aarhus</h1>
+            <h1 className="font-semibold text-2xl sm:text-3xl md:text-4xl">Aarhus</h1>
             <span className="text-muted-foreground text-sm">
               Chance of rain: {Math.round(data.chanceOfRainPercent)}%
             </span>
           </div>
 
           <div className="mt-8">
-            <p className="font-bold text-7xl tracking-tighter">
+            <p className="font-bold text-5xl sm:text-6xl md:text-7xl tracking-tighter">
               {Math.round(data.temperatureC)}°
             </p>
           </div>
 
-          <dl className="flex gap-8 mt-8 text-muted-foreground text-base">
+          <div className="flex gap-8 mt-8 text-muted-foreground text-base">
             <div className="flex flex-col">
-              <dt className="font-medium text-muted-foreground text-sm">Wind</dt>
-              <dd className="font-semibold">{Math.round(data.windSpeedKph)} km/h</dd>
+              <div className="font-medium text-muted-foreground text-xs md:text-sm">Wind</div>
+              <div className="font-semibold">{Math.round(data.windSpeedKph)} km/h</div>
             </div>
             <div className="flex flex-col">
-              <dt className="font-medium text-muted-foreground text-sm">Humidity</dt>
-              <dd className="font-semibold">{Math.round(data.humidityPercent)}%</dd>
+              <div className="font-medium text-muted-foreground text-xs md:text-sm">Humidity</div>
+              <div className="font-semibold">{Math.round(data.humidityPercent)}%</div>
             </div>
-          </dl>
+          </div>
         </div>
 
         {/* Right Column: Massive Icon */}
-        <div className="flex justify-center items-center pr-2 md:pr-8">
-          <img 
-            src={icon} 
-            alt={label} 
-            className="drop-shadow-xl w-40 md:w-56 h-40 md:h-56 object-contain" 
+        <div className="flex justify-center items-center pr-0 md:pr-8 shrink-0">
+          <img
+            src={icon}
+            alt={label}
+            className="drop-shadow-xl w-28 sm:w-32 md:w-56 h-28 sm:h-32 md:h-56 object-contain"
           />
         </div>
 

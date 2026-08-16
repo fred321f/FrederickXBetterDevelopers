@@ -8,11 +8,13 @@ import WeatherDashboard from '@/components/dashboard/WeatherDashboard'
  */
 function App() {
   return (
-    <div className="flex flex-col p-4 md:p-10 md:h-screen min-h-screen md:overflow-hidden">
-      <div className="flex-1 md:*:h-full min-h-0">
-        <WeatherDashboard />
+    <main role="main">
+      <div className="flex flex-col p-4 md:p-10 md:h-screen min-h-screen overflow-x-hidden overflow-y-auto">
+        <div className="flex-1 md:*:h-full min-h-0">
+          <WeatherDashboard />
+        </div>
       </div>
-    </div>
+    </main>
   )
 }
 
