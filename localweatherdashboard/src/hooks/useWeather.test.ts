@@ -2,6 +2,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest"
 import { renderHook, waitFor } from "@testing-library/react"
 
 import { useWeather } from "./useWeather"
+import { mockWeatherData } from "../api/mockWeatherData"
 
 function buildFetchResponse(body: unknown, ok = true, status = 200) {
   return {
@@ -53,7 +54,7 @@ describe("useWeather", () => {
 
     await waitFor(() => expect(result.current.isLoading).toBe(false))
 
-    expect(result.current.error).toBeNull()
+    expect(result.current.isFallback).toBe(false)
     expect(result.current.data?.current).toMatchObject({
       temperatureC: 18.4,
       humidityPercent: 72,
@@ -62,16 +63,19 @@ describe("useWeather", () => {
     })
   })
 
-  it("sets error and clears isLoading when the fetch fails", async () => {
+  it("falls back to mock data with isFallback true when the fetch fails", async () => {
     vi.mocked(fetch).mockResolvedValue(buildFetchResponse(null, false, 503))
+    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
 
     const { result } = renderHook(() => useWeather())
 
     await waitFor(() => expect(result.current.isLoading).toBe(false))
 
-    expect(result.current.data).toBeUndefined()
-    expect(result.current.error).toBeInstanceOf(Error)
-    expect(result.current.error?.message).toContain("503")
+    expect(result.current.isFallback).toBe(true)
+    expect(result.current.data).toEqual(mockWeatherData)
+    expect(consoleErrorSpy).toHaveBeenCalled()
+
+    consoleErrorSpy.mockRestore()
   })
 
   it("re-runs the fetch when refetch is called", async () => {

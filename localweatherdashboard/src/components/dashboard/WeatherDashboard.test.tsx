@@ -31,7 +31,7 @@ function mockResult(overrides: Partial<ReturnType<typeof useWeather>>) {
   mockUseWeather.mockReturnValue({
     data: undefined,
     isLoading: false,
-    error: null,
+    isFallback: false,
     refetch: vi.fn(),
     ...overrides,
   } as ReturnType<typeof useWeather>)
@@ -50,18 +50,6 @@ describe("WeatherDashboard", () => {
     expect(screen.getByRole("status")).toBeInTheDocument()
   })
 
-  it("renders ErrorState when the query errors, and retry calls refetch", async () => {
-    const refetch = vi.fn()
-    mockResult({ error: new Error("boom"), refetch })
-    const user = userEvent.setup()
-
-    render(<WeatherDashboard />)
-
-    expect(screen.getByRole("alert")).toHaveTextContent("boom")
-    await user.click(screen.getByRole("button", { name: /retry/i }))
-    expect(refetch).toHaveBeenCalledTimes(1)
-  })
-
   it("renders EmptyState when the query succeeds with no data", () => {
     mockResult({})
 
@@ -76,5 +64,18 @@ describe("WeatherDashboard", () => {
     render(<WeatherDashboard />)
 
     expect(screen.getByText("20°")).toBeInTheDocument()
+  })
+
+  it("renders FallbackBanner above DashContent when isFallback is true, and retry calls refetch", async () => {
+    const refetch = vi.fn()
+    mockResult({ data: sampleData, isFallback: true, refetch })
+    const user = userEvent.setup()
+
+    render(<WeatherDashboard />)
+
+    expect(screen.getByRole("alert")).toHaveTextContent(/sample data/i)
+    expect(screen.getByText("20°")).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: /retry/i }))
+    expect(refetch).toHaveBeenCalledTimes(1)
   })
 })
