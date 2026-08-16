@@ -41,8 +41,9 @@ const CONDITION_META: Record<WeatherCondition, ConditionMeta> = {
 
 /**
  * Single source of truth mapping a `WeatherCondition` to its display icon,
- * label, and accent color. Both `WeatherHero` and `ForecastDayCard`
- * import this rather than duplicating the condition -> icon/color logic.
+ * label, and accent color. `WeatherHero`, `TodayForecastStrip`, and
+ * `ForecastDayRow` all import this rather than duplicating the
+ * condition -> icon/color logic.
  * @param condition The app-level weather condition.
  * @return The icon source, display label, and Tailwind color class to use.
  */
