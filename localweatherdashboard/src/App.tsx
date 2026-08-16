@@ -1,3 +1,4 @@
+import ThemeToggle from '@/components/ThemeToggle'
 import WeatherDashboard from '@/components/dashboard/WeatherDashboard'
 
 /**
@@ -9,7 +10,10 @@ import WeatherDashboard from '@/components/dashboard/WeatherDashboard'
 function App() {
   return (
     <main role="main">
-      <div className="flex flex-col p-4 md:p-10 md:h-screen min-h-screen overflow-x-hidden overflow-y-auto">
+      <div className="flex flex-col p-4 md:p-10 pt-1 md:pt-1 md:h-screen min-h-screen overflow-x-hidden overflow-y-auto">
+        <div className="flex justify-end mb-2 pt-1">
+          <ThemeToggle />
+        </div>
         <div className="flex-1 md:*:h-full min-h-0">
           <WeatherDashboard />
         </div>

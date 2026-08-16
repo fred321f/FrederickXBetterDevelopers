@@ -4,7 +4,7 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/noto-serif";
 
-@custom-variant dark (@media (prefers-color-scheme: dark));
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-heading: var(--font-serif);
@@ -109,57 +109,55 @@
   --card-ring: oklch(0.62 0 0);
 }
 
-/* Dark mode is OS-preference-only (@custom-variant dark above) — no toggle,
-   class, or persisted preference for now. A manual toggle is one of the
-   assignment's stretch ideas, not a requirement; if added later it would
-   need `.dark`/`.light` class selectors reinstated alongside this media
-   query (class wins when present, media query is the fallback). */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0B131E;
-    --foreground: #f8fafc;
-    --card: #202B3B;
-    /* Lifts the card slightly off the background */
-    --card-foreground: #f8fafc;
-    --popover: #1e293b;
-    --popover-foreground: #f8fafc;
-    --primary: oklch(0.432 0.232 292.759);
-    --primary-foreground: oklch(0.969 0.016 293.756);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: #334155;
-    --muted-foreground: #a7abb3;
-    /* lightened from #9399A2 — keeps >= 4.5:1 contrast against dark-mode backgrounds */
-    --accent: oklch(0.432 0.232 292.759);
-    --accent-foreground: oklch(0.969 0.016 293.756);
-    --destructive: oklch(0.704 0.191 22.216);
-    /* Soften the borders so they don't look like harsh outlines */
-    --border: #334155;
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.905 0.182 98.111);
-    --chart-2: oklch(0.795 0.184 86.047);
-    --chart-3: oklch(0.681 0.162 75.834);
-    --chart-4: oklch(0.554 0.135 66.442);
-    --chart-5: oklch(0.476 0.114 61.907);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.606 0.25 292.717);
-    --sidebar-primary-foreground: oklch(0.969 0.016 293.756);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: #334155;
-    --sidebar-ring: oklch(0.556 0 0);
+/* Dark mode is class-driven: `useTheme` (src/hooks/useTheme.ts) toggles
+   `.dark` on <html> based on the persisted preference, or live OS state
+   while mode is "system" (@custom-variant dark above reads this same
+   class). Bare :root above remains the light-mode default — no `.light`
+   class needed. */
+.dark {
+  --background: #0B131E;
+  --foreground: #f8fafc;
+  --card: #202B3B;
+  /* Lifts the card slightly off the background */
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  --primary: oklch(0.432 0.232 292.759);
+  --primary-foreground: oklch(0.969 0.016 293.756);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: #334155;
+  --muted-foreground: #a7abb3;
+  /* lightened from #9399A2 — keeps >= 4.5:1 contrast against dark-mode backgrounds */
+  --accent: oklch(0.432 0.232 292.759);
+  --accent-foreground: oklch(0.969 0.016 293.756);
+  --destructive: oklch(0.704 0.191 22.216);
+  /* Soften the borders so they don't look like harsh outlines */
+  --border: #334155;
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.905 0.182 98.111);
+  --chart-2: oklch(0.795 0.184 86.047);
+  --chart-3: oklch(0.681 0.162 75.834);
+  --chart-4: oklch(0.554 0.135 66.442);
+  --chart-5: oklch(0.476 0.114 61.907);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.606 0.25 292.717);
+  --sidebar-primary-foreground: oklch(0.969 0.016 293.756);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: #334155;
+  --sidebar-ring: oklch(0.556 0 0);
 
-    /* Verified >= 3:1 (WCAG 1.4.11) against dark --card oklch(0.205 0 0). */
-    --condition-clear: oklch(0.78 0.11 78);
-    --condition-rain: oklch(0.68 0.11 240);
-    --condition-storm: oklch(0.55 0.16 240);
-    --condition-snow: oklch(0.78 0.03 230);
+  /* Verified >= 3:1 (WCAG 1.4.11) against dark --card oklch(0.205 0 0). */
+  --condition-clear: oklch(0.78 0.11 78);
+  --condition-rain: oklch(0.68 0.11 240);
+  --condition-storm: oklch(0.55 0.16 240);
+  --condition-snow: oklch(0.78 0.03 230);
 
-    /* Verified >= 3:1 (WCAG 1.4.11) against dark --card oklch(0.205 0 0). */
-    --card-ring: oklch(0.53 0 0);
-  }
+  /* Verified >= 3:1 (WCAG 1.4.11) against dark --card oklch(0.205 0 0). */
+  --card-ring: oklch(0.53 0 0);
 }
 
 @layer base {
