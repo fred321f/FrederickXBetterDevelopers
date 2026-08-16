@@ -24,7 +24,7 @@ describe("ForecastDayRow", () => {
   it("applies the primary accent background only when isToday is true", () => {
     const { container: todayContainer } = render(<ForecastDayRow day={day} isToday={true} />)
     const { container: otherContainer } = render(<ForecastDayRow day={day} isToday={false} />)
-    expect(todayContainer.querySelector('[data-slot="forecast-day-row"]')).toHaveClass("bg-primary/10")
-    expect(otherContainer.querySelector('[data-slot="forecast-day-row"]')).not.toHaveClass("bg-primary/10")
+    expect(todayContainer.querySelector('[data-slot="forecast-day-row"]')).toHaveClass("bg-muted/50")
+    expect(otherContainer.querySelector('[data-slot="forecast-day-row"]')).not.toHaveClass("bg-muted/50")
   })
 })
