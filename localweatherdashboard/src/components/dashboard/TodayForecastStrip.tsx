@@ -5,6 +5,7 @@ import type { HourlyForecast } from "@/api/weatherMapper"
 
 interface TodayForecastStripProps {
   hours: HourlyForecast[]
+  className?: string
 }
 
 /**
@@ -13,9 +14,9 @@ interface TodayForecastStripProps {
  * library. Same markup at every breakpoint: it scrolls on narrow screens
  * and sits flush without scrolling once the column is wide enough.
  */
-export default function TodayForecastStrip({ hours }: TodayForecastStripProps) {
+export default function TodayForecastStrip({ hours, className }: TodayForecastStripProps) {
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>Today's Forecast</CardTitle>
       </CardHeader>

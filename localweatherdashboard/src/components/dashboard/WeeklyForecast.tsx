@@ -5,6 +5,7 @@ import type { ForecastDay } from "@/api/weatherMapper"
 
 interface WeeklyForecastProps {
   days: ForecastDay[]
+  className?: string
 }
 
 /**
@@ -14,7 +15,7 @@ interface WeeklyForecastProps {
  * here (never inside ForecastDayRow) and moved to the front of the list
  * regardless of its position in the raw array.
  */
-export default function WeeklyForecast({ days }: WeeklyForecastProps) {
+export default function WeeklyForecast({ days, className }: WeeklyForecastProps) {
   const today = toLocalDateString()
   const sorted = [...days].sort((a, b) => {
     if (a.date === today) return -1
@@ -23,11 +24,11 @@ export default function WeeklyForecast({ days }: WeeklyForecastProps) {
   })
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>7-Day Forecast</CardTitle>
       </CardHeader>
-      <CardContent className="divide-y divide-border px-0">
+      <CardContent className="flex flex-1 flex-col divide-y divide-card-ring px-0">
         {sorted.map((day) => (
           <ForecastDayRow key={day.date} day={day} isToday={day.date === today} />
         ))}

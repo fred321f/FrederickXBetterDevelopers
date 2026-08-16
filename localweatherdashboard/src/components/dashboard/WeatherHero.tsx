@@ -4,6 +4,7 @@ import type { CurrentWeather } from "@/api/weatherMapper"
 
 interface WeatherHeroProps {
   data: CurrentWeather
+  className?: string
 }
 
 /**
@@ -12,13 +13,13 @@ interface WeatherHeroProps {
  * current-conditions display; the LLM insight slot lives in the
  * separate WeatherInsight component below it.
  */
-export default function WeatherHero({ data }: WeatherHeroProps) {
+export default function WeatherHero({ data, className }: WeatherHeroProps) {
   const { icon, label } = conditionMeta(data.condition)
 
   return (
-    <Card className="md:w-95">
+    <Card className={className}>
       <CardContent className="flex flex-col gap-4 font-sans">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex justify-between items-center gap-3">
           <div className="flex flex-col gap-1">
             <span className="font-heading font-semibold text-lg">Aarhus</span>
             <span className="text-muted-foreground text-sm">

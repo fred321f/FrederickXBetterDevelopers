@@ -3,6 +3,7 @@ import WeatherInsight from "@/components/dashboard/WeatherInsight"
 import TodayForecastStrip from "@/components/dashboard/TodayForecastStrip"
 import AirConditions from "@/components/dashboard/AirConditions"
 import WeeklyForecast from "@/components/dashboard/WeeklyForecast"
+import { cn } from "@/lib/utils"
 import type { WeatherData } from "@/api/weatherMapper"
 
 interface DashContentProps {
@@ -10,21 +11,24 @@ interface DashContentProps {
 }
 
 /**
- * Mobile: single column, hero/insight/hourly/air-conditions stacked on
- * top, weekly forecast stacked below. md: and up: fixed-width left
- * column (hero -> insight -> hourly -> air conditions) with the weekly
- * forecast filling the rest.
+ * CSS grid with named areas (.dashboard-grid in index.css), not grid-cols
+ * plus DOM order, so the area <-> breakpoint mapping is explicit in the
+ * CSS itself. Mobile: single column, hero -> insight (if present) ->
+ * today -> air -> weekly. md: and up: left column stacks the same four
+ * in order, weekly spans the right column across their full height.
+ * The "insight" area only exists in the template when there's an insight
+ * to show (.dashboard-grid--with-insight) — WeatherInsight returning
+ * null doesn't by itself remove a reserved row/gap from a static
+ * template, so the template swap is what actually prevents the gap.
  */
 export default function DashContent({ data }: DashContentProps) {
   return (
-    <div className="flex flex-col gap-6 md:grid md:grid-cols-[380px_1fr] md:items-start">
-      <div className="flex flex-col gap-4 md:w-95">
-        <WeatherHero data={data.current} />
-        <WeatherInsight insight={data.insight} />
-        <TodayForecastStrip hours={data.hourly} />
-        <AirConditions data={data.current} />
-      </div>
-      <WeeklyForecast days={data.forecast} />
+    <div className={cn("dashboard-grid", data.insight && "dashboard-grid--with-insight")}>
+      <WeatherHero data={data.current} className="[grid-area:hero]" />
+      <WeatherInsight insight={data.insight} className="[grid-area:insight]" />
+      <TodayForecastStrip hours={data.hourly} className="[grid-area:today]" />
+      <AirConditions data={data.current} className="[grid-area:air]" />
+      <WeeklyForecast days={data.forecast} className="[grid-area:weekly]" />
     </div>
   )
 }

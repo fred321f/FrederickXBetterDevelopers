@@ -52,6 +52,7 @@
     --color-condition-rain: var(--condition-rain);
     --color-condition-storm: var(--condition-storm);
     --color-condition-snow: var(--condition-snow);
+    --color-card-ring: var(--card-ring);
 }
 
 :root {
@@ -94,6 +95,15 @@
     --condition-rain: oklch(0.55 0.12 240);
     --condition-storm: oklch(0.38 0.15 240);
     --condition-snow: oklch(0.65 0.045 230);
+
+    /* Card boundary — a dedicated, opaque, contrast-verified token rather
+       than a translucent ring-foreground/N overlay (whose ceiling is too
+       low to hit 3:1 without looking like a bold outline) or the existing
+       --border token (tuned even lighter, for near-invisible hairlines
+       elsewhere — reusing it here would either stay too faint or force
+       those other hairlines bold if raised). Verified >= 3:1 (WCAG 1.4.11
+       non-text contrast) against --card. */
+    --card-ring: oklch(0.62 0 0);
 }
 
 /* Dark mode is OS-preference-only (@custom-variant dark above) — no toggle,
@@ -140,6 +150,9 @@
     --condition-rain: oklch(0.68 0.11 240);
     --condition-storm: oklch(0.55 0.16 240);
     --condition-snow: oklch(0.78 0.03 230);
+
+    /* Verified >= 3:1 (WCAG 1.4.11) against dark --card oklch(0.205 0 0). */
+    --card-ring: oklch(0.53 0 0);
   }
 }
 
@@ -153,4 +166,47 @@
   html {
     @apply font-sans;
     }
+}
+
+/* Named-area grid for DashContent. Two variants (base / --with-insight)
+   rather than one static template, because an unoccupied named-area row
+   still reserves a gap in CSS Grid even with nothing placed in it —
+   WeatherInsight returning null doesn't remove a row that's still in the
+   template. DashContent picks the variant based on whether there's an
+   insight to show, so the row only exists when something will fill it. */
+.dashboard-grid {
+  display: grid;
+  gap: 1.5rem; /* matches Tailwind's gap-6 */
+  grid-template-areas:
+    "hero"
+    "today"
+    "air"
+    "weekly";
+}
+
+.dashboard-grid--with-insight {
+  grid-template-areas:
+    "hero"
+    "insight"
+    "today"
+    "air"
+    "weekly";
+}
+
+@media (width >= 48rem) { /* Tailwind's md: breakpoint */
+  .dashboard-grid {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "hero   weekly"
+      "today  weekly"
+      "air    weekly";
+  }
+
+  .dashboard-grid--with-insight {
+    grid-template-areas:
+      "hero    weekly"
+      "insight weekly"
+      "today   weekly"
+      "air     weekly";
+  }
 }

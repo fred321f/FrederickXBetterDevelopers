@@ -17,7 +17,7 @@ export default function ForecastDayRow({ day, isToday }: ForecastDayRowProps) {
     <div
       data-slot="forecast-day-row"
       className={cn(
-        "flex items-center gap-3 px-4 py-3 transition-colors motion-reduce:transition-none scrollbar-thin",
+        "flex flex-1 items-center gap-3 px-4 py-3 transition-colors motion-reduce:transition-none scrollbar-thin",
         isToday && "bg-primary/10"
       )}
     >

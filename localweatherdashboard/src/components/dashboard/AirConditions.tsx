@@ -4,15 +4,16 @@ import type { CurrentWeather } from "@/api/weatherMapper"
 
 interface AirConditionsProps {
   data: CurrentWeather
+  className?: string
 }
 
 /**
  * 2x2 grid of secondary current-conditions stats. Reference image shows a
  * "See more" pill in the header, deliberately omitted here per spec.
  */
-export default function AirConditions({ data }: AirConditionsProps) {
+export default function AirConditions({ data, className }: AirConditionsProps) {
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>Air Conditions</CardTitle>
       </CardHeader>
