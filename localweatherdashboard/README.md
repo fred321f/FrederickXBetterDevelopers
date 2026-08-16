@@ -7,7 +7,11 @@ a small `useState`/`useEffect` hook — a single non-paginated request for one f
 doesn't need a caching/dedup library, so loading/error state is handled directly rather than
 pulled in from one.
 
-**Hours spent:** 9.5
+If the live fetch fails, the dashboard falls back to static sample data (`src/api/mockWeatherData.ts`)
+instead of a blank error screen, with a banner ("Showing sample data — live weather unavailable")
+and a retry button — this fallback banner *is* the app's error state; see `NOTES.md` for why.
+
+**Hours spent:** 18
 
 **DevLog:**
 - **Friday 14-08-2026 (2.5 hrs):** Added openMeteo.ts API fetch calls, weatherMapping and wrote tests for these. Added useWeather hook and set up TanStack Query for robust but seamless state management.
@@ -28,7 +32,7 @@ pulled in from one.
     look.
   - Cleaned up repo hygiene along the way: removed stray package files, fixed
     broken links between the second-brain docs and closed a gap in .gitignore.
-- **Sunday 16-08-2026 (in progress):**
+- **Sunday 16-08-2026 (8.5 hrs):**
   - Redesigned the dashboard into five components
   (WeatherHero, TodayForecastStrip, AirConditions, WeeklyForecast, WeatherInsight slot)
   arranged in a responsive CSS grid with named areas, matching a reference layout.
@@ -90,8 +94,8 @@ Unit tests use [Vitest](https://vitest.dev/) + [Testing Library](https://testing
 - **`src/api/openMeteo.ts`** — the fetch layer's error handling, via a mocked `fetch`: the
   non-`ok` response path, malformed/non-JSON response bodies, and the request timeout.
 - **`src/hooks/useWeather.ts`** — the hook itself, via `renderHook` and a mocked `fetch`: the
-  loading → success transition, the loading → error transition, and that `refetch()` re-runs
-  the fetch.
+  loading → success transition, the loading → mock-data-fallback transition on failure, and that
+  `refetch()` re-runs the fetch.
 - **`src/lib/date.ts`** — the local-date/weekday/hour formatting helpers, including the
   UTC-boundary regression guards called out in their own doc comments.
 - **Dashboard components** (`src/components/dashboard/`) — `conditionMeta` (icon/label lookup
@@ -100,8 +104,9 @@ Unit tests use [Vitest](https://vitest.dev/) + [Testing Library](https://testing
   `AirConditions`, `WeeklyForecast` + `ForecastDayRow` (today moved to the front of the list and
   given the `--primary` accent, regardless of its position in the raw API response), and
   `WeatherDashboard` (the loading/error/empty/loaded state switch itself).
-- **App states** (`src/components/state/`) — `LoadingState`, `ErrorState` (including the retry
-  callback), `EmptyState`.
+- **App states** (`src/components/state/`) — `LoadingState`, `ErrorState` (unused since the
+  fallback banner supersedes it, kept for reference), `EmptyState`, `FallbackBanner` (including
+  the retry callback).
 
 ```bash
 npm test
@@ -116,6 +121,7 @@ src/
     openMeteo.test.ts        # Unit tests for the fetch layer's error/timeout handling
     weatherMapper.ts         # Maps the raw Open-Meteo response into app-level WeatherData/WeatherCondition types
     weatherMapper.test.ts    # Unit tests for the mapping logic above
+    mockWeatherData.ts       # Static WeatherData fixture used when the live fetch fails
   components/
     dashboard/
       WeatherDashboard.tsx        # Switches between loading/error/empty/loaded states based on useWeather
@@ -138,10 +144,12 @@ src/
     state/
       LoadingState.tsx
       LoadingState.test.tsx
-      ErrorState.tsx                # Renders the fetch error with a retry button
+      ErrorState.tsx                # Renders the fetch error with a retry button (unused, superseded by FallbackBanner)
       ErrorState.test.tsx
       EmptyState.tsx                # Defensive fallback for a successful-but-dataless fetch
       EmptyState.test.tsx
+      FallbackBanner.tsx             # Banner shown over sample data when the live fetch fails, with a retry button
+      FallbackBanner.test.tsx
     ui/
       button.tsx              # Shadcn-generated UI primitives
       card.tsx
