@@ -1,15 +1,21 @@
 import { useWeather } from "@/hooks/useWeather"
 import EmptyState from "@/components/state/EmptyState"
-import ErrorState from "@/components/state/ErrorState"
+import FallbackBanner from "@/components/state/FallbackBanner"
 import LoadingState from "@/components/state/LoadingState"
 import DashContent from "@/components/dashboard/DashContent"
 
 export default function WeatherDashboard() {
-  const { data, error, isLoading, refetch } = useWeather()
+  const { data, isLoading, isFallback, refetch } = useWeather()
 
   if (isLoading) return <LoadingState />
-  if (error) return <ErrorState error={error} onRetry={() => refetch()} />
   if (!data) return <EmptyState onRefresh={() => refetch()} /> // edge case: query succeeded with no usable data
 
-  return <DashContent data={data} />
+  return (
+    <div className="flex flex-col h-full min-h-0">
+      {isFallback && <FallbackBanner onRetry={() => refetch()} />}
+      <div className="flex-1 min-h-0">
+        <DashContent data={data} />
+      </div>
+    </div>
+  )
 }
