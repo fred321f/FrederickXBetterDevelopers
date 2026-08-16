@@ -18,8 +18,8 @@ export interface ConditionMeta {
    * Tailwind text-color utility class for this condition, one of the --condition-*
    * tokens or muted-foreground for neutral conditions. Meteocons icons are fully
    * illustrated with their own baked-in colors, so this no longer tints the icon —
-   * it's used as a small accent instead: the condition label's text color in
-   * CurrentWeather, and (via `bg-current`) the accent dot in ForecastDayCard.
+   * it's used as a small accent instead: the accent dot (via `bg-current`) in
+   * ForecastDayCard.
    */
   colorVar: string
 }
@@ -41,8 +41,9 @@ const CONDITION_META: Record<WeatherCondition, ConditionMeta> = {
 
 /**
  * Single source of truth mapping a `WeatherCondition` to its display icon,
- * label, and accent color. Both `CurrentWeather` and `ForecastDayCard`
- * import this rather than duplicating the condition -> icon/color logic.
+ * label, and accent color. `WeatherHero`, `TodayForecastStrip`, and
+ * `ForecastDayRow` all import this rather than duplicating the
+ * condition -> icon/color logic.
  * @param condition The app-level weather condition.
  * @return The icon source, display label, and Tailwind color class to use.
  */
