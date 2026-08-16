@@ -17,34 +17,34 @@ export default function AirConditions({ data, className }: AirConditionsProps) {
       <CardHeader>
         <CardTitle>Air Conditions</CardTitle>
       </CardHeader>
-      <CardContent>
-        <dl className="grid grid-cols-2 gap-6">
-          <div className="flex items-center gap-3">
-            <Thermometer className="size-5 text-muted-foreground" aria-hidden="true" />
+      <CardContent className="flex flex-col flex-1 justify-center">
+        <dl className="gap-8 grid grid-cols-2">
+          <div className="flex items-center gap-4">
+            <Thermometer className="size-12 text-muted-foreground" aria-hidden="true" />
             <div className="flex flex-col">
-              <dt className="text-muted-foreground text-sm">Real Feel</dt>
-              <dd className="font-medium">{Math.round(data.feelsLikeC)}°</dd>
+              <dt className="text-muted-foreground text-base">Real Feel</dt>
+              <dd className="font-medium text-3xl">{Math.round(data.feelsLikeC)}°</dd>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Wind className="size-5 text-muted-foreground" aria-hidden="true" />
+          <div className="flex items-center gap-4">
+            <Wind className="size-12 text-muted-foreground" aria-hidden="true" />
             <div className="flex flex-col">
-              <dt className="text-muted-foreground text-sm">Wind</dt>
-              <dd className="font-medium">{Math.round(data.windSpeedKph)} km/h</dd>
+              <dt className="text-muted-foreground text-base">Wind</dt>
+              <dd className="font-medium text-3xl">{Math.round(data.windSpeedKph)} km/h</dd>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Droplets className="size-5 text-muted-foreground" aria-hidden="true" />
+          <div className="flex items-center gap-4">
+            <Droplets className="size-12 text-muted-foreground" aria-hidden="true" />
             <div className="flex flex-col">
-              <dt className="text-muted-foreground text-sm">Chance of rain</dt>
-              <dd className="font-medium">{Math.round(data.chanceOfRainPercent)}%</dd>
+              <dt className="text-muted-foreground text-base">Chance of rain</dt>
+              <dd className="font-medium text-3xl">{Math.round(data.chanceOfRainPercent)}%</dd>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Sun className="size-5 text-muted-foreground" aria-hidden="true" />
+          <div className="flex items-center gap-4">
+            <Sun className="size-12 text-muted-foreground" aria-hidden="true" />
             <div className="flex flex-col">
-              <dt className="text-muted-foreground text-sm">UV Index</dt>
-              <dd className="font-medium">{Math.round(data.uvIndex)}</dd>
+              <dt className="text-muted-foreground text-base">UV Index</dt>
+              <dd className="font-medium text-3xl">{Math.round(data.uvIndex)}</dd>
             </div>
           </div>
         </dl>

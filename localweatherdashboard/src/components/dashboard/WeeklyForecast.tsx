@@ -28,7 +28,7 @@ export default function WeeklyForecast({ days, className }: WeeklyForecastProps)
       <CardHeader>
         <CardTitle>7-Day Forecast</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col divide-y divide-card-ring px-0">
+      <CardContent className="flex flex-col flex-1 px-0 divide-y divide-card-ring">
         {sorted.map((day) => (
           <ForecastDayRow key={day.date} day={day} isToday={day.date === today} />
         ))}

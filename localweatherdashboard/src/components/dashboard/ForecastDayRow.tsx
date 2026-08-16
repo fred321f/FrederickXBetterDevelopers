@@ -17,18 +17,27 @@ export default function ForecastDayRow({ day, isToday }: ForecastDayRowProps) {
     <div
       data-slot="forecast-day-row"
       className={cn(
-        "flex flex-1 items-center gap-3 px-4 py-3 transition-colors motion-reduce:transition-none scrollbar-thin",
-        isToday && "bg-primary/10"
+        "flex flex-1 items-center gap-4 px-2 md:px-4 py-4 border-border/50 last:border-0 border-b transition-colors motion-reduce:transition-none",
+        isToday && "bg-muted/50 rounded-lg border-none"
       )}
     >
-      <span className="w-10 font-medium text-muted-foreground text-sm shrink-0">
+      <span className="w-16 font-medium text-muted-foreground text-sm shrink-0">
         {isToday ? "Today" : formatWeekday(day.date)}
       </span>
-      <img src={icon} alt="" aria-hidden="true" className="size-6" />
-      <span className="flex-1 text-sm">{label}</span>
-      <span className="text-sm">
-        <span className="font-medium">{Math.round(day.highC)}°</span>{" "}
-        <span className="text-muted-foreground">{Math.round(day.lowC)}°</span>
+      
+      <div className="flex flex-1 items-center gap-4">
+        <img 
+          src={icon} 
+          alt="" 
+          aria-hidden="true" 
+          className="drop-shadow-sm w-10 h-10 object-contain" 
+        />
+        <span className="font-medium text-foreground text-sm">{label}</span>
+      </div>
+      
+      <span className="min-w-[4rem] text-base text-right">
+        <span className="font-bold">{Math.round(day.highC)}°</span>{" "}
+        <span className="ml-2 text-muted-foreground">{Math.round(day.lowC)}°</span>
       </span>
     </div>
   )

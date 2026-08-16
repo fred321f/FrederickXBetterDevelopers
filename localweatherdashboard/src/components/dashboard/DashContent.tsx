@@ -24,11 +24,11 @@ interface DashContentProps {
 export default function DashContent({ data }: DashContentProps) {
   return (
     <div className={cn("dashboard-grid", data.insight && "dashboard-grid--with-insight")}>
-      <WeatherHero data={data.current} className="[grid-area:hero]" />
-      <WeatherInsight insight={data.insight} className="[grid-area:insight]" />
-      <TodayForecastStrip hours={data.hourly} className="[grid-area:today]" />
-      <AirConditions data={data.current} className="[grid-area:air]" />
-      <WeeklyForecast days={data.forecast} className="[grid-area:weekly]" />
+      <WeatherHero data={data.current} className="bg-background shadow-none p-6 border-none [grid-area:hero]" />
+      <WeatherInsight insight={data.insight} className="bg-card shadow-none p-6 border-none [grid-area:insight]" />
+      <TodayForecastStrip hours={data.hourly} className="bg-card shadow-none p-6 border-none [grid-area:today]" />
+      <AirConditions data={data.current} className="bg-card shadow-none p-6 border-none [grid-area:air]" />
+      <WeeklyForecast days={data.forecast} className="bg-card shadow-none p-6 border-none [grid-area:weekly]" />
     </div>
   )
 }
