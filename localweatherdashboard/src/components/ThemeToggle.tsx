@@ -34,14 +34,15 @@ export default function ThemeToggle() {
 
   return (
     <span className="inline-flex items-center gap-2">
-      <span className="hidden sm:block font-extralight text-muted-foreground text-xs">{LABEL[mode]}</span>
+      <span className="hidden sm:block font-medium text-muted-foreground text-xs transition-all duration-300">{LABEL[mode]}</span>
       <Button
         variant="ghost"
         size="icon"
         aria-label={`Theme: ${LABEL[mode]}. Click to switch.`}
         onClick={() => setMode(NEXT_MODE[mode])}
+        className="hover:bg-muted ring-1 ring-skeleton transition-colors duration-300"
       >
-        <Icon />
+        <Icon className="m-5 size-4 text-orange-500 dark:text-foreground" />
       </Button>
     </span>
   )

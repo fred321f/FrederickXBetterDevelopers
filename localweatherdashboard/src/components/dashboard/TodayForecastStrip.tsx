@@ -42,7 +42,7 @@ export default function TodayForecastStrip({ hours, className }: TodayForecastSt
                   src={icon} 
                   alt="" 
                   aria-hidden="true" 
-                  className="drop-shadow-sm mb-3 w-32 h-32 object-contain" 
+                  className="drop-shadow-sm mb-3 w-20 md:w-24 lg:w-32 h-20 md:h-24 lg:h-32 object-contain" 
                 />
                 
                 <span className="sr-only">{label}</span>
